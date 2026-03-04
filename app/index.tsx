@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 export default function Index() {
+  const [results, setResults] = useState<any[]>([]);
   useEffect(() => {
     console.log("Entre en pantalla2);");
   }, []);
@@ -15,6 +16,9 @@ export default function Index() {
 
       if (response.ok) {
         console.log("Request ok");
+        const data = await response.json();
+        setResults(data.results);
+        console.log(data);
       } else {
         console.log("Bard Requesr");
       }
@@ -24,14 +28,10 @@ export default function Index() {
   };
 
   return (
-    <View
-    /*style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}*/
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+    <View>
+      {results.map((item) => {
+        return <Text key={item.name}>{item.name} </Text>;
+      })}
     </View>
   );
 }

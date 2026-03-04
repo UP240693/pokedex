@@ -1,5 +1,6 @@
+import PokemonCard from "@/components/pokemonCard";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 
 export default function Index() {
   const [results, setResults] = useState<any[]>([]);
@@ -9,7 +10,7 @@ export default function Index() {
 
   const getPokemons = async () => {
     try {
-      const URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=02";
+      const URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
       const response = await fetch(URL, {
         method: "GET",
       });
@@ -30,7 +31,13 @@ export default function Index() {
   return (
     <View>
       {results.map((item) => {
-        return <Text key={item.name}>{item.name} </Text>;
+        return (
+          <PokemonCard
+            key={item.card}
+            name={item.name}
+            url={item.url}
+          ></PokemonCard>
+        );
       })}
     </View>
   );
